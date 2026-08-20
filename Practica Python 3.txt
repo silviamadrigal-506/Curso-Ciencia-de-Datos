@@ -1,0 +1,426 @@
+from numpy._core.defchararray import title
+from numpy._core.defchararray import title
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from matplotlib.ticker import FuncFormatter
+
+datos = {
+    "ID_Venta": list(range(1, 91)),
+
+    "Fecha": [
+        "2026-01-03","2026-01-03","2026-01-04","2026-01-05","2026-01-06",
+        "2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11",
+        "2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16",
+        "2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21",
+        "2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26",
+        "2026-01-27","2026-01-28","2026-01-29","2026-01-30","2026-01-31",
+        "2026-02-01","2026-02-02","2026-02-03","2026-02-04","2026-02-05",
+        "2026-02-06","2026-02-07","2026-02-08","2026-02-09","2026-02-10",
+        "2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15",
+        "2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20",
+        "2026-02-21","2026-02-22","2026-02-23","2026-02-24","2026-02-25",
+        "2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02",
+        "2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07",
+        "2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12",
+        "2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-17",
+        "2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22",
+        "2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27",
+        "2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01"
+    ],
+
+    "Cliente": [
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea",
+        "Carlos","María","José","Ana","Luis","Sofía","Pedro","Laura","Daniel","Andrea"
+    ],
+
+    "Ciudad": [
+        "San José","Alajuela","Heredia","Cartago","San José",
+        "Alajuela","Heredia","Cartago","San José","Alajuela",
+        "Heredia","San José","Cartago","Alajuela","Heredia",
+        "San José","Cartago","Alajuela","Heredia","San José",
+        "Alajuela","Cartago","San José","Heredia","Alajuela",
+        "San José","Heredia","Cartago","Alajuela","San José",
+        "Cartago","Heredia","Alajuela","San José","Cartago",
+        "Heredia","San José","Alajuela","Cartago","Heredia",
+        "San José","Alajuela","Cartago","Heredia","San José",
+        "Alajuela","Heredia","Cartago","San José","Alajuela",
+        "Heredia","Cartago","San José","Alajuela","Heredia",
+        "Cartago","San José","Alajuela","Heredia","Cartago",
+        "San José","Heredia","Alajuela","Cartago","San José",
+        "Alajuela","Cartago","Heredia","San José","Alajuela",
+        "Heredia","Cartago","San José","Alajuela","Heredia",
+        "San José","Cartago","Alajuela","Heredia","San José",
+        "Cartago","Alajuela","Heredia","San José","Cartago",
+        "Heredia","Alajuela","San José","Cartago","Heredia"
+    ],
+
+    "Producto": [
+        "Laptop","Mouse","Teclado","Monitor","Laptop",
+        "Audífonos","Mouse","Impresora","Laptop","Teclado",
+        "Monitor","Mouse","Laptop","Audífonos","Teclado",
+        "Monitor","Impresora","Laptop","Mouse","Audífonos",
+        "Laptop","Teclado","Monitor","Mouse","Impresora",
+        "Laptop","Audífonos","Teclado","Mouse","Monitor",
+        "Laptop","Impresora","Audífonos","Mouse","Teclado",
+        "Laptop","Monitor","Mouse","Impresora","Audífonos",
+        "Teclado","Laptop","Mouse","Monitor","Impresora",
+        "Audífonos","Laptop","Teclado","Mouse","Monitor",
+        "Impresora","Laptop","Audífonos","Mouse","Teclado",
+        "Monitor","Laptop","Impresora","Mouse","Audífonos",
+        "Teclado","Laptop","Monitor","Mouse","Impresora",
+        "Audífonos","Laptop","Teclado","Monitor","Mouse",
+        "Laptop","Impresora","Audífonos","Teclado","Mouse",
+        "Monitor","Laptop","Audífonos","Impresora","Mouse",
+        "Teclado","Laptop","Monitor","Mouse","Impresora",
+        "Audífonos","Laptop","Teclado","Mouse","Monitor"
+    ],
+
+    "Categoria": [
+        "Computadoras","Accesorios","Accesorios","Monitores","Computadoras",
+        "Audio","Accesorios","Impresión","Computadoras","Accesorios",
+        "Monitores","Accesorios","Computadoras","Audio","Accesorios",
+        "Monitores","Impresión","Computadoras","Accesorios","Audio",
+        "Computadoras","Accesorios","Monitores","Accesorios","Impresión",
+        "Computadoras","Audio","Accesorios","Accesorios","Monitores",
+        "Computadoras","Impresión","Audio","Accesorios","Accesorios",
+        "Computadoras","Monitores","Accesorios","Impresión","Audio",
+        "Accesorios","Computadoras","Accesorios","Monitores","Impresión",
+        "Audio","Computadoras","Accesorios","Accesorios","Monitores",
+        "Impresión","Computadoras","Audio","Accesorios","Accesorios",
+        "Monitores","Computadoras","Impresión","Accesorios","Audio",
+        "Accesorios","Computadoras","Monitores","Accesorios","Impresión",
+        "Audio","Computadoras","Accesorios","Monitores","Accesorios",
+        "Computadoras","Impresión","Audio","Accesorios","Accesorios",
+        "Monitores","Computadoras","Audio","Impresión","Accesorios",
+        "Accesorios","Computadoras","Monitores","Accesorios","Impresión",
+        "Audio","Computadoras","Accesorios","Accesorios","Monitores"
+    ],
+
+    "Cantidad": [
+        2,15,8,3,1,6,20,2,3,10,
+        4,18,2,7,12,5,3,2,25,8,
+        1,14,4,22,3,2,9,11,30,5,
+        2,4,7,16,9,1,6,18,3,12,
+        5,2,20,4,8,3,2,7,15,6,
+        4,3,10,25,2,6,1,18,12,5,
+        3,8,15,2,6,4,2,10,20,7,
+        1,5,12,3,18,4,2,8,15,6,
+        2,11,7,3,5,2,4,14,9,6
+    ],
+
+    "Precio_Unitario": [
+        450000,12000,18000,85000,450000,
+        35000,12000,95000,450000,18000,
+        85000,12000,450000,35000,18000,
+        85000,95000,450000,12000,35000,
+        450000,18000,85000,12000,95000,
+        450000,35000,18000,12000,85000,
+        450000,95000,35000,12000,18000,
+        450000,85000,12000,95000,35000,
+        18000,450000,12000,85000,95000,
+        35000,450000,18000,12000,85000,
+        95000,450000,35000,12000,18000,
+        85000,450000,95000,12000,35000,
+        18000,450000,85000,12000,95000,
+        35000,450000,18000,85000,12000,
+        450000,95000,35000,18000,12000,
+        85000,450000,35000,95000,12000,
+        18000,450000,85000,12000,95000,
+        35000,450000,18000,12000,85000
+    ],
+
+    "Metodo_Pago": [
+        "Tarjeta","SINPE","Efectivo","Tarjeta","Transferencia",
+        "SINPE","Tarjeta","Efectivo","Transferencia","Tarjeta",
+        "SINPE","Efectivo","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Transferencia","Tarjeta",
+        "Efectivo","Tarjeta","SINPE","Transferencia","Tarjeta",
+        "SINPE","Efectivo","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Tarjeta","Transferencia",
+        "Efectivo","Tarjeta","SINPE","Transferencia","Tarjeta",
+        "Efectivo","SINPE","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Tarjeta","Transferencia",
+        "SINPE","Efectivo","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Tarjeta","Transferencia",
+        "Efectivo","Tarjeta","SINPE","Transferencia","Tarjeta",
+        "Efectivo","SINPE","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Tarjeta","Transferencia",
+        "Efectivo","SINPE","Tarjeta","Transferencia","SINPE",
+        "Tarjeta","Efectivo","SINPE","Tarjeta","Transferencia",
+        "SINPE","Efectivo","Tarjeta","Transferencia","SINPE"
+    ],
+
+    "Vendedor": [
+        "Carlos","Ana","Luis","María","Pedro",
+        "Sofía","Carlos","Ana","Luis","María",
+        "Pedro","Sofía","Carlos","Ana","Luis",
+        "María","Pedro","Sofía","Carlos","Ana",
+        "Luis","María","Pedro","Sofía","Carlos",
+        "Ana","Luis","María","Pedro","Sofía",
+        "Carlos","Ana","Luis","María","Pedro",
+        "Sofía","Carlos","Ana","Luis","María",
+        "Pedro","Sofía","Carlos","Ana","Luis",
+        "María","Pedro","Sofía","Carlos","Ana",
+        "Luis","María","Pedro","Sofía","Carlos",
+        "Ana","Luis","María","Pedro","Sofía",
+        "Carlos","Ana","Luis","María","Pedro",
+        "Sofía","Carlos","Ana","Luis","María",
+        "Pedro","Sofía","Carlos","Ana","Luis",
+        "María","Pedro","Sofía","Carlos","Ana",
+        "Luis","María","Pedro","Sofía","Carlos",
+        "Ana","Luis","María","Pedro","Sofía"
+    ]
+}
+
+df = pd.DataFrame(datos)
+# select * from ventas;
+df.head()
+#Mostrar las columnas de cliete y producto
+df[["Cliente", "Producto", "Precio_Unitario"]]
+#Filtrar ventas de  un cliente
+df[df["Cliente"]=="Carlos"]
+#Mostrar slo las compras de Carlos
+#Filtras productos con precios mayor a 50.000
+df[df["Precio_Unitario"] > 50000]
+#Mostrar las ventas realizadas en San Jose
+df[df["Ciudad"]=="San José"]
+#utilizar 2 condiciones
+df[
+    (df["Cliente"] =="Carlos") &
+    (df["Precio_Unitario"] < 50000)
+]
+
+#Select *
+#From ventas
+#Where Cliente = 'Carlos'
+#And Precio Unitario > 50000;
+
+
+#De mayor a menor
+df.sort_values("Precio_Unitario", ascending=False)
+#select *
+#From ventas
+#order by Precio_Universitario DESC;
+#De menor a mayor
+df.sort_values("Precio_Unitario", ascending=True)
+
+#Calcular el total de ventas
+df["Total"] = df["Cantidad"] * df["Precio_Unitario"]
+#select *
+#Producto,
+#Cantidad,
+#Precio Unitario,
+#Cantidad 8 Precio_Unitario as Total
+#From Ventas;
+#Calcular el total deventas
+df["Total"] = df["Cantidad"] * df["Precio_Unitario"]
+df[["ID_Venta", "Producto", "Cantidad", "Precio_Unitario", "Total"]]
+
+#Select
+#Producto,
+#SUM(Total)as Total_Vendido
+#From ventas
+#group by Producto;
+
+#Obtener el total vendido por producto
+#df.groupby("Producto")["Total"].sum()
+
+#df.groupby("Producto", as_index=False)["Total"].sum()
+#Obtener el total vendido por metodo de pago
+#df.groupby("Metodo_Pago", as_index=False)["Total"].sum()
+#Obtener el total vendido por cliente
+#Select
+  #Metodo_Pago,
+  #SUM(total) as Total_Vendido
+  #From ventas
+  #group by Metodo_Pago;
+
+
+#df["Total"] = df["Cantidad"] * df["Precio_Unitario"]
+#ventas_producto = df.groupby("Producto")["Total"].sum()
+
+#ventas_producto.plot(
+    #kind="bar",
+    #figsize=(10,5),
+    #color="red"
+#)
+
+
+#cantidad_producto = df.groupby("Producto")["Cantidad"].sum()
+#cantidad_producto.plot(
+    #kind="bar",
+    #figsize=(10,5),
+    #color="orange"
+#)
+
+#plt.title("Cantidad de productos vendidos")
+#plt.xlabel("Producto")
+#plt.ylabel("Cantidad")
+
+
+
+
+#cantidad_producto = df.groupby("Producto")["Cantidad"].sum()
+
+#cantidad_producto.plot(
+    #kind="pie",
+    #figsize=(10, 5),
+
+    #autopct="%1.1f%%"
+#)
+
+#plt.title("Cantidad de productos vendidos")
+#plt.xlabel("Producto")
+#plt.ylabel("Cantidad")
+#plt.xticks(rotation=60)
+#plt.show()
+
+
+#ventas_ciudad = df.groupby("Ciudad")["Total"].sum()
+
+#ventas_ciudad.plot(
+    #kind="bar",
+    #figsize=(9, 5),
+    #color="green"
+#)
+
+#plt.title("ventas totales por ciudad")
+#plt.xlabel("Ciudad")
+#plt.ylabel("Ventas")
+#plt.xticks(rotation=60)
+#plt.show()
+
+
+#Metodo de pago
+
+#Metodo_Pago = df.groupby("Metodo_Pago")["Total"].sum()
+
+#Metodo_Pago.plot(
+    #kind="bar",
+    #figsize=(8, 5),
+    #color="purple"
+#)
+
+#plt.title("Cantidad de ventas por metodo de pago")
+#plt.xlabel("metodo de pago")
+#plt.ylabel("numero de ventas")
+#plt.xticks(rotation=45)
+#plt.show()
+
+
+plt.figure(figsize=(10, 5))
+
+#distribucion  por precio unitario
+plt.hist(
+    df["Precio_Unitario"],
+    bins=10,
+    color="blue",
+    edgecolor="black"
+)
+
+plt.title("Distribución de precios unitarios")
+plt.xlabel("Precio unitario (₡)")
+plt.ylabel("Frecuencia")
+
+plt.figure(figsize=(10, 6))
+
+plt.scatter(
+ df["Cantidad"],
+ df["Precio_Unitario"],
+ color="red"               
+)
+plt.title("Relacion entre cantidad y precio")
+plt.xlabel("Cantidad")
+plt.ylabel("Precio Unitario")
+plt.show()
+
+ventas_fecha= df.groupby("Fecha")["Total"].sum()
+
+ventas_fecha.plot(
+    kind="line",
+    figsize=(14,5),
+    marker="o", 
+    color="blue"
+)
+
+plt.title("Ventas por fecha")
+plt.xlabel("Fecha")
+plt.ylabel("Ventas")
+plt.xticks(rotation=45)
+plt.show()
+
+
+#Crear la figura
+plt.figure(figsize=(12, 6))
+# Gráfico
+plt.plot(
+    df["ID_Venta"],
+    df["Total"],
+    color="#22C55E",
+    linewidth=3,
+    marker="o",
+    markersize=6,
+    markerfacecolor="#FFFFFF",
+    markeredgecolor="#22C55E",
+    markeredgewidth=2
+)
+
+# Título
+plt.title(
+    "Evolución del Total de Ventas",
+    fontsize=20,
+    fontweight="bold",
+    color="white",
+    pad=20
+)
+
+# Etiquetas
+plt.xlabel(
+    "ID de Venta",
+    fontsize=12,
+    color="#CBD5E1"
+)
+
+plt.ylabel(
+    "Total de Ventas (₡)",
+    fontsize=12,
+    color="#CBD5E1"
+)
+
+# Color de los números de los ejes
+plt.tick_params(
+    colors="#CBD5E1"
+)
+
+# Cuadrícula profesional
+plt.grid(
+    True,
+    linestyle="--",
+    linewidth=0.6,
+    alpha=0.25,
+    color="white"
+)
+
+# Quitar bordes innecesarios
+plt.gca().spines["top"].set_visible(False)
+plt.gca().spines["right"].set_visible(False)
+
+plt.gca().spines["left"].set_color("#334155")
+plt.gca().spines["bottom"].set_color("#334155")
+
+# Ajustar diseño
+plt.tight_layout()
+
+plt.show()
+
+
+

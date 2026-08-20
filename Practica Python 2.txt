@@ -1,0 +1,514 @@
+import pandas as pd
+datos = {
+    "Ciudad": [
+        "San José", "San José", "Alajuela", "Heredia",
+        "Cartago", "San José", "Alajuela", "Heredia",
+        "Cartago", "San José", "Alajuela", "Heredia"
+    ],
+
+    "Producto": [
+        "Laptop", "Mouse", "Laptop", "Teclado",
+        "Laptop", "Monitor", "Mouse", "Laptop",
+        "Teclado", "Laptop", "Monitor", "Mouse"
+    ],
+
+    "Categoria": [
+        "Computadoras", "Accesorios", "Computadoras", "Accesorios",
+        "Computadoras", "Monitores", "Accesorios", "Computadoras",
+        "Accesorios", "Computadoras", "Monitores", "Accesorios"
+    ],
+
+    "Cantidad": [
+        2, 10, 3, 8, 4, 5,
+        15, 2, 6, 3, 7, 20
+    ],
+
+    "Precio": [
+        450000, 12000, 450000, 18000,
+        450000, 85000, 12000, 450000,
+        18000, 450000, 85000, 12000
+    ]
+}
+
+df = pd.DataFrame(datos)
+print(df)
+
+# Primeras Filas
+#df.head()
+
+# Saber cuatas filas hay
+#df.shape
+
+#Estadisticas basicas
+#df.describe()
+
+#Cunatas veces aparece?
+#df["Ciudad"]. value_counts()
+#df["Producto"]. value_counts()
+#df['Categoria']. value_counts()
+#obtener solamente el
+#df["Ciudad"]. value_counts().head(1)
+#df["Ciudad"]. value_counts().idxmax()
+
+#Cuantos registros hay por ciudad?
+#df["ciudad"].value_counts()
+#Cual es el producto que mas aparece?
+#df["Producto"]. value_counts().idxmax()
+#Cual es la categoria mas frecuente?
+#df["Categoria"]. value_counts().idxmax()
+
+#Cuantas unidades vendimos por ciudad?
+#df.groupby("Ciudad")["Cantidad"].sum()
+
+#Cual es el promedio de unidades vendidas por ciudad?
+#df.groupby("Ciudad")["Cantidad"].mean()
+
+#Cuantasventas tiene por ciudad?
+#df.groupby("Ciudad")["Cantidad"].count()
+# Maximo
+#df.groupby("Ciudad")["Cantidad"].max()
+
+#df.groupby(["Ciudad","Categoria"])["Cantidad"].sum()
+
+#buscar si aparece algo
+
+#aggg()
+#df.groupby("Ciudad")["Cantidad"].agg(
+    #["sum","mean","min", "max"]
+#)
+df.groupby("Ciudad").agg({
+    "Cantidad": ["sum","mean","max"],
+    "Precio": ["mean", "min", "max"]
+})
+
+#Muy util para analisis de datos
+#pd.pivot_table()
+
+
+#pd.pivot_table(
+  #df,
+  #values="Cantidad",
+  #index="Ciudad",
+  #columns="Categoria",
+  #aggfunc="sum"
+
+#)
+
+
+import pandas as pd
+
+datos = {
+
+    "Ciudad": [
+
+        "San José", "San José", "Alajuela", "Heredia",
+
+        "Cartago", "San José", "Alajuela", "Heredia",
+
+        "Cartago", "San José", "Alajuela", "Heredia"TypeError                                 Traceback (most recent call last)
+
+/tmp/ipykernel_11456/738860810.py in <cell line: 0>()
+
+     86
+
+     87
+
+---> 88 pd.pivot_table(
+
+     89   df,
+
+     90   value="Cantidad",
+
+
+
+TypeError: pivot_table() got an unexpected keyword argument 'value'    ],
+
+
+
+    "Producto": [
+
+        "Laptop", "Mouse", "Laptop", "Teclado",
+
+        "Laptop", "Monitor", "Mouse", "Laptop",
+
+        "Teclado", "Laptop", "Monitor", "Mouse"
+
+    ],
+
+
+
+    "Categoria": [
+
+        "Computadoras", "Accesorios", "Computadoras", "Accesorios",
+
+        "Computadoras", "Monitores", "Accesorios", "Computadoras",
+
+        "Accesorios", "Computadoras", "Monitores", "Accesorios"
+
+    ],
+
+
+
+    "Cantidad": [
+
+        2, 10, 3, 8, 4, 5,
+
+        15, 2, 6, 3, 7, 20
+
+    ],
+
+
+
+    "Precio": [
+
+        450000, 12000, 450000, 18000,
+
+        450000, 85000, 12000, 450000,
+
+        18000, 450000, 85000, 12000
+
+    ]
+
+}
+
+
+
+df = pd.DataFrame(datos)
+
+print(df)
+
+
+
+# Primeras Filas
+
+#df.head()
+
+
+
+# Saber cuatas filas hay
+
+#df.shape
+
+
+
+#Estadisticas basicas
+
+#df.describe()
+
+
+
+#Cunatas veces aparece?
+
+#df["Ciudad"]. value_counts()
+
+#df["Producto"]. value_counts()
+
+#df['Categoria']. value_counts()
+
+#obtener solamente el
+
+#df["Ciudad"]. value_counts().head(1)
+
+#df["Ciudad"]. value_counts().idxmax()
+
+
+
+#Cuantos registros hay por ciudad?
+
+#df["ciudad"].value_counts()
+
+#Cual es el producto que mas aparece?
+
+#df["Producto"]. value_counts().idxmax()
+
+#Cual es la categoria mas frecuente?
+
+#df["Categoria"]. value_counts().idxmax()
+
+
+
+#Cuantas unidades vendimos por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].sum()
+
+
+
+#Cual es el promedio de unidades vendidas por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].mean()
+
+
+
+#Cuantasventas tiene por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].count()
+
+# Maximo
+
+#df.groupby("Ciudad")["Cantidad"].max()
+
+
+
+#df.groupby(["Ciudad","Categoria"])["Cantidad"].sum()
+
+
+
+#buscar si aparece algo
+
+
+
+#aggg()
+
+#df.groupby("Ciudad")["Cantidad"].agg(
+
+    #["sum","mean","min", "max"]
+
+#)
+
+df.groupby("Ciudad").agg({
+
+    "Cantidad": ["sum","mean","max"],
+
+    "Precio": ["mean", "min", "max"]
+
+})
+
+
+
+#Muy util para analisis de datos
+
+#pd.pivot_table()
+
+
+
+
+
+pd.pivot_table(
+
+  df,
+
+  value="Cantidad",
+
+  index="Ciudad",
+
+  columns="Categoria",
+
+  aggfunc="sum"
+
+
+
+)
+
+import pandas as pd
+
+datos = {
+
+    "Ciudad": [
+
+        "San José", "San José", "Alajuela", "Heredia",
+
+        "Cartago", "San José", "Alajuela", "Heredia",
+
+        "Cartago", "San José", "Alajuela", "Heredia"TypeError                                 Traceback (most recent call last)
+
+/tmp/ipykernel_11456/738860810.py in <cell line: 0>()
+
+     86
+
+     87
+
+---> 88 pd.pivot_table(
+
+     89   df,
+
+     90   value="Cantidad",
+
+
+
+TypeError: pivot_table() got an unexpected keyword argument 'value'    ],
+
+
+
+    "Producto": [
+
+        "Laptop", "Mouse", "Laptop", "Teclado",
+
+        "Laptop", "Monitor", "Mouse", "Laptop",
+
+        "Teclado", "Laptop", "Monitor", "Mouse"
+
+    ],
+
+
+
+    "Categoria": [
+
+        "Computadoras", "Accesorios", "Computadoras", "Accesorios",
+
+        "Computadoras", "Monitores", "Accesorios", "Computadoras",
+
+        "Accesorios", "Computadoras", "Monitores", "Accesorios"
+
+    ],
+
+
+
+    "Cantidad": [
+
+        2, 10, 3, 8, 4, 5,
+
+        15, 2, 6, 3, 7, 20
+
+    ],
+
+
+
+    "Precio": [
+
+        450000, 12000, 450000, 18000,
+
+        450000, 85000, 12000, 450000,
+
+        18000, 450000, 85000, 12000
+
+    ]
+
+}
+
+
+
+df = pd.DataFrame(datos)
+
+print(df)
+
+
+
+# Primeras Filas
+
+#df.head()
+
+
+
+# Saber cuatas filas hay
+
+#df.shape
+
+
+
+#Estadisticas basicas
+
+#df.describe()
+
+
+
+#Cunatas veces aparece?
+
+#df["Ciudad"]. value_counts()
+
+#df["Producto"]. value_counts()
+
+#df['Categoria']. value_counts()
+
+#obtener solamente el
+
+#df["Ciudad"]. value_counts().head(1)
+
+#df["Ciudad"]. value_counts().idxmax()
+
+
+
+#Cuantos registros hay por ciudad?
+
+#df["ciudad"].value_counts()
+
+#Cual es el producto que mas aparece?
+
+#df["Producto"]. value_counts().idxmax()
+
+#Cual es la categoria mas frecuente?
+
+#df["Categoria"]. value_counts().idxmax()
+
+
+
+#Cuantas unidades vendimos por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].sum()
+
+
+
+#Cual es el promedio de unidades vendidas por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].mean()
+
+
+
+#Cuantasventas tiene por ciudad?
+
+#df.groupby("Ciudad")["Cantidad"].count()
+
+# Maximo
+
+#df.groupby("Ciudad")["Cantidad"].max()
+
+
+
+#df.groupby(["Ciudad","Categoria"])["Cantidad"].sum()
+
+
+
+#buscar si aparece algo
+
+
+
+#aggg()
+
+#df.groupby("Ciudad")["Cantidad"].agg(
+
+    #["sum","mean","min", "max"]
+
+#)
+
+df.groupby("Ciudad").agg({
+
+    "Cantidad": ["sum","mean","max"],
+
+    "Precio": ["mean", "min", "max"]
+
+})
+
+
+
+#Muy util para analisis de datos
+
+#pd.pivot_table()
+
+
+
+
+
+pd.pivot_table(
+
+  df,
+
+  value="Cantidad",
+
+  index="Ciudad",
+
+  columns="Categoria",
+
+  aggfunc="sum"
+
+
+
+)
+
+
+
+
+
+
+
+
+
+

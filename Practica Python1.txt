@@ -1,0 +1,5 @@
+Mostrar tu nombre cinco veces usando for.
+Pedir dos números y mostrar cuál es el mayor.
+Pedir un número y decir si es par o impar.
+Mostrar la tabla de multiplicar del 7.
+Contar del 20 al 1.

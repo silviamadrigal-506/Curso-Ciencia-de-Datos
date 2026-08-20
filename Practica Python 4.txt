@@ -1,0 +1,138 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Datos
+datos_renuncias = {
+    "Trimestre": ["Q1", "Q2", "Q3", "Q4"],
+    "Año 1": [3, 2, 2, 9],
+    "Año 2": [4, 3, 2, 10],
+    "Año 3": [3, 2, 3, 11]
+}
+
+df_renuncias = pd.DataFrame(datos_renuncias)
+
+# Gráfico
+plt.figure(figsize=(10, 6))
+
+plt.plot(
+    df_renuncias["Trimestre"],
+    df_renuncias["Año 1"],
+    marker="o",
+    linewidth=2,
+    color="blue",
+    label="Año 1"
+)
+
+plt.plot(
+    df_renuncias["Trimestre"],
+    df_renuncias["Año 2"],
+    marker="o",
+    linewidth=2,
+    color="red",
+    label="Año 2"
+)
+
+plt.plot(
+    df_renuncias["Trimestre"],
+    df_renuncias["Año 3"],
+    marker="o",
+    linewidth=2,
+    color="purple",
+    label="Año 3"
+)
+
+# Título y etiquetas
+plt.title("Renuncias por trimestre - Comparación de tres años",
+          fontsize=15, fontweight="bold")
+
+plt.xlabel("Trimestre")
+plt.ylabel("Número de renuncias")
+
+# Mostrar valores sobre los puntos
+for i, año in enumerate(["Año 1", "Año 2", "Año 3"]):
+    for x, y in enumerate(df_renuncias[año]):
+        plt.text(
+            x, y + 0.3, str(y),
+            ha="center",
+            fontsize=10
+        )
+
+plt.grid(True, linestyle="--", alpha=0.4)
+plt.legend(title="Año")
+plt.tight_layout()
+plt.show()
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Crear los datos
+datos = {
+    "mes": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "Ventas_tienda_fisica": [
+        4200, 4150, 4300, 4180, 4250, 4100,
+        4220, 4190, 4260, 4150, 4300, 4230
+    ],
+    "Ventas_tienda_online": [
+        800, 870, 950, 1050, 1180, 1300,
+        1450, 1600, 1750, 1900, 2100, 2350
+    ]
+}
+
+# Crear DataFrame
+df = pd.DataFrame(datos)
+
+# Grafico ventas fisicas
+plt.figure(figsize=(10, 6))
+
+plt.plot(
+    df["mes"],
+    df["Ventas_tienda_fisica"],
+    marker="o",
+    label="Ventas Tienda Física"
+)
+
+# Grafico de ventas en linea
+plt.plot(
+    df["mes"],
+    df["Ventas_tienda_online"],
+    marker="o",
+    label="Ventas Tienda Online"
+)
+
+
+# Calcular el porcentaje de participación de la tienda online
+df["porcentaje"] = (
+    df["Ventas_tienda_online"] /
+    (df["Ventas_tienda_fisica"] + df["Ventas_tienda_online"])
+) * 100
+
+# Mostrar la tabla
+print(df)
+
+# Crear gráfico
+plt.figure(figsize=(10, 6))
+
+plt.plot(
+    df["mes"],
+    df["porcentaje"],
+    marker="o"
+)
+
+# Agregar el porcentaje encima de cada punto
+for x, y in zip(df["mes"], df["porcentaje"]):
+    plt.text(
+        x,
+        y + 0.5,
+        f"{y:.1f}%",
+        ha="center"
+    )
+
+plt.title("Porcentaje de participación de la Tienda Online por Mes")
+plt.xlabel("Mes")
+plt.ylabel("Porcentaje (%)")
+
+plt.xticks(df["mes"])
+plt.ylim(0, 40)
+
+plt.grid(True)
